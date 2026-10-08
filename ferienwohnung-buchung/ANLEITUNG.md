@@ -1,6 +1,6 @@
 # Ferienwohnung Buchung
 
-Eigenständiges WordPress-Plugin für **eine Ferienwohnung**, Version 1.5.3.
+Eigenständiges WordPress-Plugin für **eine Ferienwohnung**, Version 1.5.5.
 
 ## Buchungsaktionen (1.5.2)
 
@@ -10,9 +10,21 @@ Stornieren verwendet ein orangefarbenes Kalendersymbol, Ablehnen ein rotes Kreuz
 
 Einheitliche Aktionslegende: Ablehnen als Kreis mit Kreuz auf Rot, Stornieren als Rückpfeil auf Rot nur bei bestätigten Buchungen, Wiederherstellen als Recyclingzeichen auf Grün. Status-Dropdown und Suche nach Name, Buchungsnummer oder An-/Abreisedatum mit Filtern und Zurücksetzen; aktive Kriterien und Trefferzahl bleiben sichtbar. Datumsanzeigen in der Verwaltung verwenden TT.MM.JJJJ. Native Datumseingaben richten ihre Anzeige nach der Browsersprache.
 
+## GitHub-Updates (ab 1.5.4)
+
+Version 1.5.4 einmal manuell hochladen und das bestehende Plugin ersetzen. Danach prüft WordPress neue Versionen aus https://github.com/TentacleGuy/FeWo-Wordpress unter Plugins bzw. Dashboard → Aktualisierungen. Mit „Erneut prüfen“ dort lässt sich der GitHub-Cache leeren. Automatische Updates können über WordPress aktiviert werden; das Plugin schaltet sie nicht selbst ein.
+
+Für jede neue Version: Plugin-Version und FWB_VERSION erhöhen, ZIP mit scripts/build.ps1 bauen, auf GitHub einen veröffentlichten stabilen Release mit Tag vVERSION (z. B. v1.5.5) anlegen und ferienwohnung-buchung-VERSION.zip als Release-Asset anhängen. Die automatisch erzeugten GitHub-Quellcodearchive werden nicht verwendet. Die ZIP muss den Ordner ferienwohnung-buchung mit der Plugin-Hauptdatei enthalten. Repository und Assets müssen öffentlich erreichbar sein; kein Token erforderlich. Tag, Plugin-Version und ZIP-Version müssen übereinstimmen. GitHubs neuester stabiler Release ist die Updatequelle; Entwürfe und Vorabversionen werden ignoriert.
+
+Abfragen werden eine Stunde zwischengespeichert, fehlgeschlagene Abfragen zehn Minuten. Bei Ausfall oder API-Limit wird kein unvollständiges Update angeboten. Der WordPress-Server muss api.github.com und die GitHub-Downloadserver per HTTPS erreichen können. Bei Updateprüfungen wird eine Verbindung zu GitHub hergestellt; Buchungs- und Gästedaten werden dabei nicht übertragen.
+
+## Backend-Kalender (1.5.5)
+
+Anreise und Abreise direkt im Kalender markieren. Rechts daneben stehen die Felder zum Anlegen einer sofort bestätigten Buchung. Unter dem Kalender lässt sich derselbe Zeitraum mit optionalem Grund sperren; dafür sind keine Gästedaten erforderlich. Auf schmalen Bildschirmen stehen die Spalten untereinander. Die bisherige Liste anstehender Anfragen und Aufenthalte entfällt.
+
 ## Installation
 
-1. `dist/ferienwohnung-buchung-1.5.3.zip` in WordPress unter **Plugins → Installieren → Plugin hochladen** auswählen und aktivieren.
+1. `dist/ferienwohnung-buchung-1.5.5.zip` in WordPress unter **Plugins → Installieren → Plugin hochladen** auswählen und aktivieren.
 2. **Ferienwohnung → Einstellungen** öffnen. Nachtpreis, maximale Belegung, Unterkunftsname, Gastgeber-E-Mail und Datenschutz-Link ausfüllen.
 3. Für Rechnungen zusätzlich vollständige Rechnungssteller-Adresse, Steuerkennung, passenden Steuer-/Rechnungshinweis und Bankverbindung hinterlegen. Umsatzsteuersatz passend zur eigenen Situation einstellen. Ohne diese Rechnungsangaben ist die Ausstellung gesperrt.
 4. Auf einer Seite einen Shortcode-Block mit `[ferienwohnung_buchung]` einfügen. Für einen Kalender ohne Formular: `[ferienwohnung_kalender]`.

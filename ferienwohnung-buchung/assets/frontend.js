@@ -35,7 +35,7 @@
     const today = cal.dataset.today, t=language(cal), locale=cal.dataset.locale||'de-DE';
     const date=value=>new Intl.DateTimeFormat(locale,{timeZone:'UTC'}).format(new Date(value+'T12:00:00Z'));
     cal.querySelectorAll('.fwb-weekdays span').forEach((e,i)=>{e.textContent=new Intl.DateTimeFormat(locale,{weekday:'short',timeZone:'UTC'}).format(new Date(Date.UTC(2024,0,1+i)));});
-    const form = cal.closest('.fwb-widget')?.querySelector('form');
+    const form = cal.closest('.fwb-widget')?.querySelector('form') || cal.closest('.fwb-calendar-workspace')?.querySelector('#fwb-manual form');
     const selection = () => {
       const arrival = form?.elements.arrival.value || '';
       const departure = form?.elements.departure.value || '';

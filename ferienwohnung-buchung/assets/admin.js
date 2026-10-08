@@ -37,6 +37,24 @@
   if(manual){
     const form=manual.querySelector('form'),result=manual.querySelector('#fwb-manual-result');
     const preview=manual.querySelector('#fwb-manual-quote');let revision=0;
+    const workspace=manual.closest('.fwb-calendar-workspace');
+    if(workspace){
+      const blockForm=workspace.querySelector('.fwb-calendar-column form');
+      const blockButton=blockForm.querySelector('button');
+      const syncRange=()=>{
+        const arrival=form.elements.arrival.value,departure=form.elements.departure.value;
+        blockForm.elements.arrival.value=arrival;
+        blockForm.elements.departure.value=departure;
+        blockButton.disabled=!arrival||departure<=arrival;
+      };
+      form.addEventListener('change',()=>{syncRange();revision++;result.textContent='Zeitraum oder Daten geändert – Preis und Verfügbarkeit erneut prüfen.';});
+      form.addEventListener('input',syncRange);
+      blockForm.addEventListener('submit',e=>{
+        syncRange();
+        if(blockButton.disabled){e.preventDefault();result.textContent='Bitte zuerst Anreise und Abreise im Kalender auswählen.';}
+      });
+      syncRange();
+    }
     form.addEventListener('input',()=>{revision++;result.textContent='Daten geändert – Preis und Verfügbarkeit erneut prüfen.';});
     preview.addEventListener('click',async()=>{
       const current=++revision;preview.disabled=true;result.textContent='Wird geprüft …';

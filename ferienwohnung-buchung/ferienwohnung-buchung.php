@@ -2,19 +2,21 @@
 /**
  * Plugin Name: Ferienwohnung Buchung
  * Description: Belegungskalender, Buchungsanfragen, Formularbaukasten, E-Mail-Vorlagen und PDF-Rechnungen für eine Ferienwohnung.
- * Version: 1.5.3
+ * Version: 1.5.5
  * Requires at least: 6.4
  * Requires PHP: 8.1
  * License: GPL-2.0-or-later
+ * Update URI: https://github.com/TentacleGuy/FeWo-Wordpress
  * Text Domain: ferienwohnung-buchung
  */
 defined('ABSPATH') || exit;
-define('FWB_VERSION', '1.5.3');
+define('FWB_VERSION', '1.5.5');
 define('FWB_DIR', plugin_dir_path(__FILE__));
 define('FWB_URL', plugin_dir_url(__FILE__));
-foreach (['i18n', 'domain', 'settings', 'design', 'layout', 'store', 'documents', 'api', 'management', 'admin', 'frontend', 'designer'] as $file) {
+foreach (['updater', 'i18n', 'domain', 'settings', 'design', 'layout', 'store', 'documents', 'api', 'management', 'admin', 'frontend', 'designer'] as $file) {
     require_once FWB_DIR . 'includes/' . $file . '.php';
 }
+FWB_Updater::boot();
 register_activation_hook(__FILE__, ['FWB_Store', 'install']);
 add_action('plugins_loaded', static function () {
     if (get_option('fwb_version') !== FWB_VERSION) { FWB_Store::install(); }

@@ -176,3 +176,13 @@ body.fwb-modal-open .mce-floatpanel{z-index:100200!important}
 .fwb-booking-filters input[type=search]{width:340px;max-width:100%}
 .fwb-filter-summary{padding:10px 12px;background:#eef5fa;border-left:3px solid #2271b1}
 @media(max-width:600px){.fwb-booking-filters label,.fwb-booking-filters input[type=search]{width:100%}}
+/* Calendar selection and booking form share one responsive workspace. */
+.fwb-calendar-workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.fwb-calendar-workspace>.fwb-card{min-width:0;margin:22px 0}
+.fwb-calendar-workspace .fwb-calendar{max-width:none}
+.fwb-calendar-workspace .fwb-settings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.fwb-calendar-block{display:flex;align-items:center;gap:10px;margin-top:20px}
+.fwb-calendar-block input[name=reason]{flex:1;min-width:0}
+.fwb-calendar-workspace .fwb-calendar-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.fwb-calendar-workspace .fwb-calendar-top button{cursor:pointer;padding:6px 12px}
+@media(max-width:900px){.fwb-calendar-workspace{grid-template-columns:1fr;gap:0}.fwb-calendar-workspace>.fwb-card{margin:12px 0}}

@@ -65,7 +65,7 @@ final class FWB_Admin {
                     $settings=FWB_Settings::get();$settings['custom_css']=FWB_Settings::sanitize_css((string)($p['custom_css']??''));
                     update_option('fwb_settings',$settings,false);$tab='design';break;
                 case 'manual':
-                    $tab='calendar';$result=FWB_Management::create($p);$notice=$result['message'];
+                    $tab='calendar';$p['status']='confirmed';$result=FWB_Management::create($p);$notice=$result['message'];
                     delete_transient('fwb_manual_'.get_current_user_id());break;
                 case 'booking_action':
                     $notice=FWB_Management::apply($id,sanitize_key($p['booking_action']??''),!empty($p['send_mail']));break;
@@ -82,7 +82,7 @@ final class FWB_Admin {
                     $tab='calendar';
                     $a=FWB_Domain::date((string)($p['arrival'] ?? '')); $d=FWB_Domain::date((string)($p['departure'] ?? ''));
                     if ($a >= $d || $a->diff($d)->days>1095) { throw new InvalidArgumentException('Sperrzeit muss zwischen 1 und 1095 Nächten liegen.'); }
-                    FWB_Store::insert(['arrival'=>$a->format('Y-m-d'),'departure'=>$d->format('Y-m-d')],['name'=>sanitize_text_field($p['reason'] ?? 'Sperrzeit')],'blocked'); break;
+                    FWB_Store::insert(['arrival'=>$a->format('Y-m-d'),'departure'=>$d->format('Y-m-d')],['name'=>(sanitize_text_field($p['reason'] ?? '') ?: 'Sperrzeit')],'blocked'); break;
                 case 'paid':
                     $b=FWB_Store::get($id); $paid=FWB_Domain::cents($p['paid'] ?? '0');
                     if (!isset($b['data']['quote']['total'])) { throw new InvalidArgumentException('Sperrzeiten haben keinen Zahlungsstatus.'); }
@@ -288,13 +288,12 @@ final class FWB_Admin {
         echo '<div id="fwb-template-preview" hidden><p id="fwb-preview-subject"></p><iframe title="Vorlagenvorschau" sandbox="" style="width:100%;height:650px;background:white"></iframe></div></main><aside id="fwb-template-options"></aside></div><p id="fwb-template-status" role="status"></p></div></div>';
     }
     private static function calendar(): void {
-        global $wpdb; echo '<p><a class="button button-primary" href="#fwb-manual">+ Reservierung anlegen</a></p><div class="fwb-card">' . FWB_Frontend::calendar_markup() . '</div>';self::manual_form();
-        $t=FWB_Store::table(); $rows=$wpdb->get_results($wpdb->prepare("SELECT id,name,arrival,departure,status FROM $t WHERE status IN ('pending','confirmed','blocked') AND departure >= %s ORDER BY arrival LIMIT 200",current_time('Y-m-d')),ARRAY_A);
-        echo '<div class="fwb-card"><h2>Anstehende Anfragen und Aufenthalte</h2><p>Offene Anfragen sperren den Kalender nicht. Die Liste zeigt auch diese Anfragen.</p><ul>';
-        foreach ($rows as $b) { echo '<li><a href="' . esc_url(self::url('bookings').'&booking='.$b['id']) . '">' . esc_html(self::display_date($b['arrival']) . ' – ' . self::display_date($b['departure']) . ' · ' . $b['name'] . ' · ' . self::labels()[$b['status']]) . '</a></li>'; }
-        echo '</ul></div>';self::block_form();
-    }
-    private static function row_actions(array $b,bool $table=true): void {
+        echo '<div class="fwb-calendar-workspace"><div class="fwb-card fwb-calendar-column"><h2>Zeitraum auswählen</h2><p>Wähle zuerst die Anreise, danach die Abreise. Der Abreisetag bleibt für eine neue Anreise frei.</p>'.FWB_Frontend::calendar_markup();
+        self::form('block');
+        echo '<div class="fwb-calendar-block"><input type="hidden" name="arrival"><input type="hidden" name="departure"><button class="button" id="fwb-calendar-block" disabled>Sperren</button><label class="screen-reader-text" for="fwb-block-reason">Grund (optional)</label><input id="fwb-block-reason" name="reason" maxlength="200" placeholder="Grund (optional)"></div></form></div>';
+        self::manual_form();
+        echo '</div>';
+    }    private static function row_actions(array $b,bool $table=true): void {
         $data=$b['data']??json_decode($b['payload']??'{}',true);
         $actions=FWB_Management::actions($b['status']);
         if(!isset($data['quote']['total']))$actions=array_values(array_diff($actions,['confirmed']));
@@ -317,16 +316,16 @@ final class FWB_Admin {
     private static function manual_form(): void {
         $s=FWB_Settings::get();$draft=(array)get_transient('fwb_manual_'.get_current_user_id());
         $value=static fn($key,$default='')=>esc_attr((string)($draft[$key]??$default));
-        echo '<div class="fwb-card" id="fwb-manual"><h2>Reservierung anlegen</h2><p>Für telefonische Buchungen. Es gelten die hinterlegten Preise, Gästegrenzen und Mindestnächte. Eine Anfrage blockiert den Kalender erst nach Bestätigung.</p>';
+        echo '<div class="fwb-card" id="fwb-manual"><h2>Reservierung anlegen</h2><p>Die Buchung wird sofort bestätigt. Es gelten die hinterlegten Preise, Gästegrenzen und Mindestnächte.</p>';
         self::form('manual');echo '<p><label>Buchungssprache <select name="language">';foreach(FWB_I18n::languages() as $slug=>$info)echo '<option value="'.esc_attr($slug).'" '.selected($draft['language']??FWB_I18n::current(),$slug,false).'>'.esc_html($info['name']).'</option>';echo '</select></label></p>';echo '<div class="fwb-settings-grid">';
         foreach(['arrival'=>'Anreise','departure'=>'Abreise'] as $key=>$label)echo '<label>'.$label.'<input type="date" name="'.$key.'" value="'.$value($key).'" min="'.esc_attr(current_time('Y-m-d')).'" required></label>';
         foreach(['guests'=>'Gäste gesamt','taxable_guests'=>'Davon ortstaxenpflichtig'] as $key=>$label)echo '<label>'.$label.'<input type="number" name="'.$key.'" min="'.($key==='guests'?1:0).'" max="'.(int)$s['max_guests'].'" value="'.$value($key,min(2,$s['max_guests'])).'" required></label>';
-        echo '<label>Status<select name="status"><option value="confirmed" '.selected($draft['status']??'confirmed','confirmed',false).'>Bestätigte Buchung</option><option value="pending" '.selected($draft['status']??'','pending',false).'>Offene Anfrage</option></select></label></div><p><button type="button" class="button" id="fwb-manual-quote">Preis und Verfügbarkeit prüfen</button></p><p id="fwb-manual-result" role="status">Der Preis wird aus deinen Einstellungen berechnet und beim Anlegen gespeichert.</p><h3>Gästedaten</h3><div class="fwb-settings-grid">';
+        echo '<input type="hidden" name="status" value="confirmed"></div><p><button type="button" class="button" id="fwb-manual-quote">Preis und Verfügbarkeit prüfen</button></p><p id="fwb-manual-result" role="status">Der Preis wird aus deinen Einstellungen berechnet und beim Anlegen gespeichert.</p><h3>Gästedaten</h3><div class="fwb-settings-grid">';
         foreach(['name'=>'Vor- und Nachname','email'=>'E-Mail (optional ohne Mailversand)','phone'=>'Telefon'] as $key=>$label)echo '<label>'.$label.'<input name="'.$key.'" type="'.($key==='email'?'email':($key==='phone'?'tel':'text')).'" maxlength="200" value="'.$value($key).'"'.($key==='name'?' required':'').'></label>';
         echo '</div>';
         foreach(['address'=>'Rechnungsadresse (für Rechnungen erforderlich)','message'=>'Nachricht / Absprachen (kann über {message} in Vorlagen erscheinen)'] as $key=>$label)echo '<p><label>'.$label.'<textarea name="'.$key.'" rows="3" maxlength="4000" class="large-text">'.esc_textarea((string)($draft[$key]??'')).'</textarea></label></p>';
-        echo '<p><label><input type="checkbox" name="send_mail" value="1" '.checked(!empty($draft['send_mail']),true,false).'> Passende Bestätigungs- bzw. Eingangs-Mail an den Gast senden'.($s['auto_invoice']?' (ggf. zusätzlich Rechnungsmail)':'').'</label></p><p>Ohne Häkchen werden für diese Reservierung keine Mails versendet. Rechnungen kannst du anschließend in den Buchungsdetails erstellen.'.($s['auto_invoice']?' Die automatische Rechnungserstellung bei Bestätigung ist aktiviert.':'').'</p>';
-        submit_button('Reservierung anlegen');echo '</form></div>';
+        echo '<p><label><input type="checkbox" name="send_mail" value="1" '.checked(!empty($draft['send_mail']),true,false).'> Bestätigungs-Mail an den Gast senden'.($s['auto_invoice']?' (ggf. zusätzlich Rechnungsmail)':'').'</label></p><p>Ohne Häkchen werden für diese Reservierung keine Mails versendet. Rechnungen kannst du anschließend in den Buchungsdetails erstellen.'.($s['auto_invoice']?' Die automatische Rechnungserstellung bei Bestätigung ist aktiviert.':'').'</p>';
+        submit_button('Buchung anlegen');echo '</form></div>';
     }
     public static function dashboard_summary(): void {
         if(!current_user_can('manage_options'))return;
