@@ -1,0 +1,178 @@
+.fwb-admin{max-width:1250px}.fwb-admin-head{display:flex;justify-content:space-between;align-items:center;padding:28px 0 20px}.fwb-admin-head h1{font-size:30px;font-weight:600;margin:8px 0}.fwb-admin-head p{color:#64756c}.fwb-version{border:1px solid #d5dfd7;padding:6px 12px;border-radius:20px;color:#64756c}.fwb-card{background:#fff;border:1px solid #dce3dd;border-radius:10px;padding:24px;margin:22px 0}.fwb-card h2{margin-top:0;font-size:20px}.fwb-card label{font-weight:500}.fwb-inline{display:flex;flex-wrap:wrap;gap:12px;align-items:end}.fwb-inline form{margin:0}.fwb-inline label{display:block}.fwb-inline input,.fwb-inline select{display:block;margin-top:6px}.fwb-settings-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:20px 0}.fwb-settings-grid input{display:block;width:100%;margin-top:7px}.fwb-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;background:#edf0ed}.fwb-badge.pending{background:#fff0cf;color:#79551a}.fwb-badge.confirmed{background:#deeee2;color:#28563a}.fwb-badge.cancelled,.fwb-badge.rejected{background:#f4e4e1;color:#8b4940}.fwb-filters{display:flex;gap:14px;margin-bottom:18px}.fwb-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;padding:20px;background:#f4f7f1;border-radius:8px;margin:24px 0}.fwb-metrics span,.fwb-metrics strong{display:block}.fwb-metrics strong{font-size:22px;margin-top:8px}.fwb-builder-row{display:flex;align-items:center;flex-wrap:wrap;gap:12px;padding:18px;border:1px solid #dce3dd;border-radius:8px;margin:12px 0;background:#fafcf8}.fwb-builder-row label{font-size:12px}.fwb-builder-row label input:not([type=checkbox]),.fwb-builder-row label select,.fwb-builder-row textarea{display:block;margin-top:5px}.fwb-drag{cursor:grab!important;font-size:23px!important}.fwb-card details{border-bottom:1px solid #dce3dd;padding:16px 0}.fwb-card summary{font-size:15px;font-weight:600;cursor:pointer}.fwb-card details textarea{margin-top:14px}.fwb-card .fwb-calendar{max-width:550px}.fwb-warning{background:#fff4df;border-left:4px solid #b88024;padding:12px}@media(max-width:850px){.fwb-settings-grid,.fwb-metrics{grid-template-columns:1fr 1fr}.fwb-card{padding:16px}.fwb-filters{flex-wrap:wrap}}
+/* WordPress admin does not load the frontend theme's UIkit. */
+.fwb-admin .fwb-calendar-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+.fwb-admin .fwb-calendar-top h3{margin:0}
+.fwb-admin .fwb-legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+.fwb-admin .fwb-muted{color:#646970;font-size:12px}
+.fwb-admin .fwb-eyebrow{font-size:11px;letter-spacing:.15em;color:#557565}
+/* Builder: palette, two columns, full-width header/footer and one stable WP editor. */
+.fwb-builder-shell{display:grid;grid-template-columns:220px minmax(0,1fr);gap:20px;align-items:start}
+.fwb-palette{background:#f4f7f5;padding:14px;border:1px solid #dce3dd;border-radius:8px}
+.fwb-palette .button{display:block;width:100%;text-align:left;margin-top:7px;white-space:normal;cursor:grab}
+.fwb-palette label,.fwb-palette select{display:block;width:100%;margin-bottom:10px}
+.fwb-canvas{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;min-width:0}
+.fwb-zone-top,.fwb-zone-bottom{grid-column:1/-1}
+.fwb-zone{border:1px solid #ccd7cf;background:#f8faf9;border-radius:8px;padding:12px;min-width:0}
+.fwb-zone h3{margin:0 0 12px}
+.fwb-dropzone{display:flex;flex-wrap:wrap;align-content:start;gap:10px;min-height:75px}
+.fwb-layout-card{box-sizing:border-box;width:100%;padding:12px;background:white;border:1px solid #ccd7cf;border-radius:6px;min-width:0}
+.fwb-layout-card.fwb-half{width:calc(50% - 5px)}
+.fwb-layout-card.is-selected{outline:2px solid #2271b1}
+.fwb-layout-card small{display:block;color:#526259;margin:8px 0}
+.fwb-card-name{border:0;background:none;color:#1d2327;font-weight:600;cursor:pointer;text-align:left;overflow-wrap:anywhere;padding:4px}
+.fwb-card-actions{display:flex;gap:5px;flex-wrap:wrap}
+.fwb-card-actions select{width:100%;min-width:0}
+.fwb-inspector{margin-top:24px;padding:20px;border:2px solid #2271b1;border-radius:8px}
+.fwb-inspector [hidden],.fwb-inspector[hidden]{display:none}
+.fwb-inspector textarea,.fwb-inspector select{display:block;width:100%;margin-top:7px}
+.fwb-inspector .description{overflow-wrap:anywhere}
+@media(max-width:1100px){.fwb-layout-card.fwb-half{width:100%}.fwb-builder-shell{grid-template-columns:190px minmax(0,1fr)}}
+@media(max-width:780px){.fwb-builder-shell,.fwb-canvas{grid-template-columns:1fr}.fwb-zone-top,.fwb-zone-bottom{grid-column:auto}.fwb-inspector .fwb-settings-grid{grid-template-columns:1fr}.fwb-palette .button{display:inline-block;width:auto;margin-right:7px}}
+.fwb-palette{position:sticky;top:42px;max-height:calc(100vh - 65px);overflow:auto}
+.fwb-palette .button{padding:3px 8px;line-height:26px;min-height:30px}
+.fwb-layout-card>.fwb-drag{padding:0;width:30px;min-height:30px;line-height:28px}
+.fwb-card-actions .button{padding:0 7px;min-height:28px;line-height:26px}
+.fwb-card-actions select{font-size:12px;min-height:28px;line-height:26px}
+.fwb-layout-card small{margin:5px 0}
+.fwb-card-preview{font-size:12px;color:#526259;margin:4px 0 8px;overflow-wrap:anywhere}
+.fwb-inspector{scroll-margin-top:45px}
+@media(max-width:780px){.fwb-palette{position:static;max-height:none}}
+.fwb-palette [data-palette],.fwb-layout-card>.fwb-drag{touch-action:none}
+.fwb-builder-shell.is-dragging,.is-dragging *{cursor:grabbing!important;user-select:none}
+.fwb-drop-target{outline:3px dashed #2271b1!important;background:#eaf4ff!important}
+/* Studio layout stays scoped to this plugin; the public theme is never loaded here. */
+.fwb-admin:has(#fwb-builder),.fwb-admin:has(#fwb-template-designer){max-width:none}
+.fwb-workspace{display:grid;grid-template-columns:minmax(500px,1fr) 350px;gap:20px;align-items:start}
+.fwb-workspace>#fwb-builder{min-width:0}
+.fwb-workspace .fwb-builder-shell{grid-template-columns:165px minmax(0,1fr);gap:14px}
+.fwb-workspace .fwb-inspector{position:sticky;top:45px;margin:0;padding:16px;border:1px solid #d7e2db;background:#fff;max-height:calc(100vh - 75px);overflow:auto;box-shadow:0 4px 20px #182c1810}
+.fwb-workspace .fwb-inspector h3{font-size:16px;line-height:1.4}
+.fwb-workspace .fwb-settings-grid{display:block;margin:15px 0}
+.fwb-setting,.fwb-inspector-fields label,#fwb-inspector-fields>label{display:block;margin:12px 0;font-size:13px}
+.fwb-setting input:not([type=checkbox]),.fwb-setting select,#fwb-inspector-fields input:not([type=checkbox]),#fwb-inspector-fields select,#fwb-inspector-fields textarea{width:100%;margin-top:5px;box-sizing:border-box}
+.fwb-setting input[type=checkbox]{margin-left:12px}
+.fwb-color{display:flex;align-items:center;gap:5px}
+.fwb-color input[type=color]{width:40px!important;min-width:40px;height:32px;padding:2px}
+.fwb-color input[type=text]{min-width:0}
+.fwb-color .button{min-width:30px}
+#fwb-inspector-tabs{display:flex;gap:5px;margin:16px 0;border-bottom:1px solid #d7e2db;padding-bottom:10px}
+#fwb-inspector-tabs [aria-pressed=true],.fwb-template-workspace .is-active{background:#e8f1eb;color:#1c5137;border-color:#72a687}
+.fwb-studio-toolbar,#fwb-studio-toolbar,#fwb-template-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:14px 0;margin-bottom:15px}
+.fwb-attribute-list{margin:18px 0;padding-top:10px;border-top:1px solid #ddd}
+.fwb-attribute-row{display:grid;grid-template-columns:1fr 1fr 30px;gap:4px;margin:6px 0}
+.fwb-attribute-row input{min-width:0}
+.fwb-live-preview{min-width:0;max-width:100%;overflow:auto;background:#eff3ef;padding:12px;border-radius:8px}
+.fwb-live-preview iframe{border:0;height:800px;background:white;max-width:none}
+.fwb-design-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 28px}
+.fwb-template-workspace{display:grid;grid-template-columns:170px minmax(400px,1fr) 300px;gap:20px;align-items:start}
+#fwb-template-list{position:sticky;top:45px}
+#fwb-template-list .button{display:block;width:100%;text-align:left;white-space:normal;margin-bottom:8px;padding:8px 12px}
+#fwb-template-options{position:sticky;top:45px;max-height:calc(100vh - 75px);overflow:auto;background:#f5f8f6;border:1px solid #d7e2db;border-radius:8px;padding:15px}
+.fwb-template-main{min-width:0}
+#fwb-subject-label{display:block;margin:15px 0}
+#fwb-template-subject{margin-top:8px}
+.fwb-tokens .button{margin:3px;font-size:12px}
+#fwb-template-preview{overflow:auto;margin-top:20px;max-width:100%}
+#fwb-template-preview iframe{max-width:none;border:1px solid #ddd}
+.fwb-pdf-controls{margin-top:20px}
+.fwb-workspace [hidden],.fwb-template-workspace [hidden],#fwb-template-designer [hidden]{display:none!important}
+@media(min-width:1500px){.fwb-layout-card.fwb-half{width:calc(50% - 5px)}}
+@media(max-width:1250px){.fwb-workspace{grid-template-columns:minmax(360px,1fr) 310px}.fwb-workspace .fwb-builder-shell{grid-template-columns:140px minmax(0,1fr)}.fwb-workspace .fwb-canvas{grid-template-columns:1fr}.fwb-template-workspace{grid-template-columns:145px minmax(300px,1fr)}#fwb-template-options{grid-column:1/-1;position:static;max-height:none}.fwb-tokens{display:flex;flex-wrap:wrap;gap:10px}}
+@media(max-width:900px){.fwb-workspace,.fwb-template-workspace{grid-template-columns:1fr}.fwb-workspace .fwb-inspector{position:static;max-height:none}.fwb-design-grid{grid-template-columns:1fr 1fr}.fwb-template-workspace #fwb-template-options{grid-column:auto}#fwb-template-list{position:static;display:flex;flex-wrap:wrap;gap:6px}#fwb-template-list .button{width:auto}}
+
+/* Keep the actual column order recognizable on laptop screens. */
+@media(min-width:1101px){.fwb-workspace .fwb-canvas{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.fwb-workspace .fwb-layout-card.fwb-half{width:100%}}
+.fwb-workspace .fwb-layout-card:not(.is-selected):not(:hover):not(:focus-within) .fwb-card-actions{display:none}
+.fwb-workspace .fwb-layout-card{padding:10px}
+.fwb-workspace .fwb-zone{padding:10px}
+.fwb-workspace .fwb-layout-card .fwb-card-name{max-width:calc(100% - 38px);vertical-align:middle}
+.fwb-design-section{border:1px solid #dce3dd;border-radius:8px;padding:16px;margin:20px 0}
+.fwb-design-section legend{font-size:16px;font-weight:600;padding:0 8px}
+/* Consistent admin controls. Checkboxes, color swatches and multi-line editors retain their purpose. */
+.fwb-admin input:not([type=checkbox]):not([type=radio]):not([type=hidden]):not([type=submit]):not([type=button]):not([type=color]),.fwb-admin select{height:40px;min-height:40px;line-height:normal;box-sizing:border-box;padding:6px 10px;font-size:14px}
+.fwb-admin textarea{box-sizing:border-box;padding:8px 10px;line-height:1.5}
+.fwb-admin .fwb-inline>.button{min-height:40px;line-height:38px}
+.fwb-admin .fwb-inline label{min-width:180px;flex:1}
+.fwb-admin .fwb-inline label>input{width:100%}
+.fwb-admin .fwb-settings-grid select{display:block;width:100%;margin-top:7px}
+.fwb-mail-choice{display:block;margin:8px 0;font-size:12px}
+.fwb-row-actions{display:flex;flex-wrap:wrap;gap:6px}
+.fwb-table-scroll{overflow-x:auto}
+.fwb-booking-table{min-width:850px}
+.fwb-booking-table td{vertical-align:top}
+.fwb-booking-table td:last-child{min-width:220px}
+.fwb-dashboard-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:24px}
+.fwb-stat{display:block;background:white;border:1px solid #dce3dd;border-radius:10px;padding:22px;text-decoration:none;color:#24362e}
+.fwb-stat span{display:block;font-size:13px}.fwb-stat strong{display:block;font-size:34px;margin-top:14px}
+.fwb-next-booking{border-left:5px solid #397457}.fwb-next-date{font-size:32px;font-weight:600;color:#28563a}
+.fwb-admin meter{width:140px;vertical-align:middle;margin-right:8px}
+.fwb-workspace{display:block}
+.fwb-workspace .fwb-builder-shell{grid-template-columns:210px minmax(0,1fr)}
+.fwb-card-name{cursor:default;display:inline-block;width:calc(100% - 88px)}
+.fwb-edit{float:right;font-size:21px!important;width:34px;padding:0!important}
+.fwb-modal-open{overflow:hidden}
+.fwb-workspace .fwb-inspector{position:fixed;inset:0;z-index:100100;display:flex;align-items:center;justify-content:center;background:#13221acc;max-height:none;margin:0;padding:28px;border:0;border-radius:0;overflow:hidden}
+.fwb-modal-sheet{box-sizing:border-box;background:white;border-radius:12px;width:900px;max-width:100%;max-height:calc(100vh - 56px);overflow:auto;padding:24px;box-shadow:0 20px 80px #0005}
+.fwb-modal-sheet #fwb-back-layout{float:right}
+.fwb-modal-sheet #fwb-inspector-title{font-size:21px;margin:5px 0 20px;padding-right:155px}
+.fwb-modal-sheet .fwb-settings-grid{display:block}
+.fwb-style-group{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 20px;border:1px solid #dce3dd;border-radius:8px;margin:18px 0;padding:16px}
+.fwb-style-group legend{padding:0 8px;font-weight:600;font-size:15px}
+.fwb-modal-footer{border-top:1px solid #dce3dd;margin-top:20px;padding-top:12px}
+.fwb-modal-footer p{color:#536257}
+body.fwb-modal-open .mce-floatpanel{z-index:100200!important}
+@media(max-width:850px){.fwb-dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.fwb-workspace .fwb-builder-shell{grid-template-columns:170px minmax(0,1fr)}}
+@media(max-width:600px){.fwb-dashboard-grid,.fwb-workspace .fwb-builder-shell,.fwb-style-group{grid-template-columns:1fr}.fwb-workspace .fwb-inspector{padding:10px}.fwb-modal-sheet{max-height:calc(100vh - 20px);padding:16px}.fwb-modal-sheet #fwb-back-layout{float:none}.fwb-modal-sheet #fwb-inspector-title{padding-right:0;margin-top:12px}.fwb-admin .fwb-settings-grid{grid-template-columns:1fr}}
+
+.fwb-action-dialog{max-width:460px;width:calc(100% - 40px);box-sizing:border-box;border:1px solid #dce3dd;border-radius:12px;padding:24px;box-shadow:0 20px 80px #0004}.fwb-action-dialog::backdrop{background:#13221aaa}.fwb-action-dialog h2{margin-top:0}.fwb-action-dialog .button{margin-right:8px}
+
+/* Compact, labelled icon actions keep each booking on one action line. */
+.fwb-icon-actions,.fwb-icon-actions form{display:flex;align-items:center;flex-wrap:nowrap;gap:5px;margin:0}
+.fwb-admin .fwb-icon-button{display:inline-flex;align-items:center;justify-content:center;width:32px;min-width:32px;height:32px;min-height:32px;line-height:1;padding:0}
+.fwb-icon-button .dashicons{font-size:18px;width:18px;height:18px}
+.fwb-icon-mail{display:inline-flex;align-items:center;gap:3px;margin-left:4px;white-space:nowrap}
+.fwb-icon-mail input{margin:0}.fwb-icon-mail .dashicons{font-size:18px}
+.fwb-bulk-bar{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin:16px 0}
+.fwb-bulk-bar label{white-space:nowrap}.fwb-select-cell{width:28px!important}
+.fwb-badge.trash{background:#e8e8e8;color:#555}
+.fwb-admin .fwb-icon-button .dashicons,.fwb-admin .fwb-icon-mail .dashicons{line-height:1}
+.fwb-admin #fwb-bulk-action{min-width:230px;max-width:100%}
+
+/* Distinct actions and checkbox layout in the booking details. */
+.fwb-admin .fwb-action-cancelled{color:#805000;border-color:#996300;background:#fff3d6}
+.fwb-admin .fwb-action-rejected{color:#a02222;border-color:#b32d2e;background:#fff0f0}
+.fwb-admin .fwb-action-cancelled:hover{color:#603c00;border-color:#805000;background:#ffe6ad}
+.fwb-admin .fwb-action-rejected:hover{color:#801818;border-color:#a02222;background:#ffdddd}
+.fwb-action-legend{display:flex;align-items:center;flex-wrap:wrap;gap:10px 18px;margin:16px 0;padding:12px;background:#f6f7f7;border:1px solid #dce3dd;border-radius:6px}
+.fwb-action-legend>span{display:inline-flex;align-items:center;gap:4px}
+.fwb-action-legend .dashicons-calendar-alt{color:#805000}.fwb-action-legend .dashicons-no-alt{color:#a02222}
+.fwb-admin .fwb-detail-actions,.fwb-admin .fwb-detail-actions form{flex-wrap:wrap;gap:8px}
+.fwb-admin .fwb-detail-actions .fwb-icon-button{width:auto;padding:0 10px;gap:6px}
+.fwb-admin .fwb-icon-actions .fwb-icon-mail{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.fwb-admin .fwb-icon-mail input[type=checkbox]{display:inline-block;flex:0 0 auto;width:1rem;height:1rem;margin:0;vertical-align:middle}
+@media(max-width:782px){.fwb-admin .fwb-icon-mail input[type=checkbox]{width:1.5625rem;height:1.5625rem}}
+/* Distinct booking actions and correctly aligned mail checkbox. */
+.fwb-admin .fwb-action-cancelled{color:#805000;border-color:#996300;background:#fff3d6}
+.fwb-admin .fwb-action-rejected{color:#a02222;border-color:#b32d2e;background:#fff0f0}
+.fwb-admin .fwb-action-cancelled:hover{color:#603c00;background:#ffe6ad}
+.fwb-admin .fwb-action-rejected:hover{color:#801818;background:#ffdddd}
+.fwb-action-legend{display:flex;align-items:center;flex-wrap:wrap;gap:10px 18px;margin:16px 0;padding:12px;background:#f6f7f7;border:1px solid #dce3dd;border-radius:6px}
+.fwb-action-legend>span{display:inline-flex;align-items:center;gap:4px}
+.fwb-action-legend .dashicons-calendar-alt{color:#805000}.fwb-action-legend .dashicons-no-alt{color:#a02222}
+.fwb-admin .fwb-detail-actions,.fwb-admin .fwb-detail-actions form{flex-wrap:wrap;gap:8px}
+.fwb-admin .fwb-detail-actions .fwb-icon-button{width:auto;padding:0 10px;gap:6px}
+.fwb-admin .fwb-icon-actions .fwb-icon-mail{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.fwb-admin .fwb-icon-mail input[type=checkbox]{display:inline-block;flex:0 0 auto;width:1rem;height:1rem;margin:0;vertical-align:middle}
+@media(max-width:782px){.fwb-admin .fwb-icon-mail input[type=checkbox]{width:1.5625rem;height:1.5625rem}}
+/* Shared action colors for buttons and legend, including theme overrides. */
+.fwb-admin .button.fwb-action-cancelled,.fwb-admin .button.fwb-action-rejected,.fwb-admin .fwb-legend-icon.fwb-action-cancelled,.fwb-admin .fwb-legend-icon.fwb-action-rejected{background:#b32d2e!important;border-color:#8a2424!important;color:#fff!important}
+.fwb-admin .button.fwb-action-restore,.fwb-admin .fwb-legend-icon.fwb-action-restore{background:#237a39!important;border-color:#195b2a!important;color:#fff!important}
+.fwb-admin .button.fwb-action-cancelled:hover,.fwb-admin .button.fwb-action-rejected:hover{background:#8a2424!important}
+.fwb-admin .button.fwb-action-restore:hover{background:#195b2a!important}
+.fwb-legend-icon{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:3px}
+.fwb-recycle-icon{font-family:"Segoe UI Symbol","Arial Unicode MS",sans-serif;font-size:23px;line-height:1}
+.fwb-booking-filters{display:flex;flex-wrap:wrap;align-items:end;gap:12px}
+.fwb-booking-filters label{display:flex;flex-direction:column;gap:6px}
+.fwb-booking-filters input[type=search]{width:340px;max-width:100%}
+.fwb-filter-summary{padding:10px 12px;background:#eef5fa;border-left:3px solid #2271b1}
+@media(max-width:600px){.fwb-booking-filters label,.fwb-booking-filters input[type=search]{width:100%}}
